@@ -17,6 +17,8 @@ class Item
       if @last_price_change < (Date.today - 30) && @last_promotion_start_date < (Date.today - 30)
         @is_currently_red_pencil_promotion = true
       end
+    else
+      @is_currently_red_pencil_promotion = false
     end
     @last_price_change = Date.today
   end

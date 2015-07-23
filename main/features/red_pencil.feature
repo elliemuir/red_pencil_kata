@@ -14,3 +14,9 @@ Feature: Automatic red pencil promotion status evaluation for items
     And my item is not currently marked as a red pencil promotion
     When I reduce the price of my item by 15%
     Then the item should not be tagged as a red pencil promotion
+
+  Scenario: Red pencil promotion is cancelled if price reduction brings current price to more than 30% off
+    Given I have an item for sale on the website
+    And my item is currently marked as a red pencil promotion
+    When I reduce the price of my item by 40%
+    Then the item should not be tagged as a red pencil promotion
