@@ -26,3 +26,10 @@ Feature: Automatic red pencil promotion status evaluation for items
     And my item has been marked as a red pencil promotion for 30 days
     When another day passes during the promotion
     Then the item should not be tagged as a red pencil promotion
+
+  Scenario:  Further price reduction during red pencil promotion does not reset length of promotion
+    Given I have an item for sale on the website
+    And my item has been marked as a red pencil promotion for 15 days
+    When I reduce the price of my item by 10%
+    Then the item should now be tagged as a red pencil promotion
+    But the last promotion start date should be 15 days ago

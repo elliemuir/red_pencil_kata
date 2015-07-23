@@ -17,10 +17,10 @@ class Item
     percent_off = ((@base_price - @current_price)/@base_price) * 100
     if percent_off > 5 && percent_off < 30
       if @last_price_change < (Date.today - 30) && @last_promotion_start_date < (Date.today - 30)
-        @is_currently_red_pencil_promotion = true
+        trigger_red_pencil_promotion unless @is_currently_red_pencil_promotion
       end
     else
-      @is_currently_red_pencil_promotion = false
+      cancel_red_pencil_promotion if @is_currently_red_pencil_promotion
     end
     @last_price_change = Date.today
   end
@@ -31,6 +31,18 @@ class Item
       @is_currently_red_pencil_promotion = false
       @number_of_days_on_current_promotion = 0
     end
+  end
+
+  def trigger_red_pencil_promotion
+    @is_currently_red_pencil_promotion = true
+    @last_promotion_start_date = Date.today
+    @number_of_days_on_current_promotion = 1
+  end
+
+  def cancel_red_pencil_promotion
+    @is_currently_red_pencil_promotion = false
+    @last_promotion_start_date = Date.today
+    @number_of_days_on_current_promotion = 0
   end
 
 
