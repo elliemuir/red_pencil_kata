@@ -25,12 +25,14 @@ class Item
     @last_price_change = Date.today
   end
 
+  def increase_price(percentage)
+    @current_price += @current_price*(percentage.to_f/100)
+    cancel_red_pencil_promotion if @is_currently_red_pencil_promotion
+  end
+
   def add_day
     @number_of_days_on_current_promotion += 1
-    if @number_of_days_on_current_promotion > 30
-      @is_currently_red_pencil_promotion = false
-      @number_of_days_on_current_promotion = 0
-    end
+    cancel_red_pencil_promotion if @number_of_days_on_current_promotion > 30
   end
 
   def trigger_red_pencil_promotion

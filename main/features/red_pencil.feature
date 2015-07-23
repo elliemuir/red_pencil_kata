@@ -33,3 +33,9 @@ Feature: Automatic red pencil promotion status evaluation for items
     When I reduce the price of my item by 10%
     Then the item should now be tagged as a red pencil promotion
     But the last promotion start date should be 15 days ago
+
+  Scenario:  An increase in price during a red pencil promotion will automatically cancel the promotion
+    Given I have an item for sale on the website
+    And my item is currently marked as a red pencil promotion
+    When I increase the price of my item by 10%
+    Then the item should not be tagged as a red pencil promotion

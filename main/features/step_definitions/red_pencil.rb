@@ -13,6 +13,10 @@ When(/^I reduce the price of my item by (\d+)%$/) do |percent|
   $item.current_price = $item.reduce_price(percent)
 end
 
+When(/^I increase the price of my item by (\d+)%$/) do |percent|
+  $item.current_price = $item.increase_price(percent)
+end
+
 Then(/^the item should (now|not) be tagged as a red pencil promotion$/) do |now_or_not|
   if now_or_not == "now"
     fail "Item was not flagged as red pencil promotion" unless $item.is_currently_red_pencil_promotion
