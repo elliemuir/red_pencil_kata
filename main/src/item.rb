@@ -1,6 +1,7 @@
 class Item
 
-  attr_accessor :base_price, :current_price, :last_price_change, :last_promotion_start_date, :is_currently_red_pencil_promotion
+  attr_accessor :base_price, :current_price, :last_price_change, :last_promotion_start_date,
+                :is_currently_red_pencil_promotion, :number_of_days_on_current_promotion
 
   def initialize
     @base_price = 100.0
@@ -8,6 +9,7 @@ class Item
     @last_price_change = Date.today - 31
     @last_promotion_start_date = Date.today - 31
     @is_currently_red_pencil_promotion = false
+    @number_of_days_on_current_promotion = 0
   end
 
   def reduce_price(percentage)
@@ -21,6 +23,14 @@ class Item
       @is_currently_red_pencil_promotion = false
     end
     @last_price_change = Date.today
+  end
+
+  def add_day
+    @number_of_days_on_current_promotion += 1
+    if @number_of_days_on_current_promotion > 30
+      @is_currently_red_pencil_promotion = false
+      @number_of_days_on_current_promotion = 0
+    end
   end
 
 

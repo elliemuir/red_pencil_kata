@@ -24,3 +24,12 @@ end
 Given(/^I have an item for sale on the website$/) do
   $item = Item.new
 end
+
+And(/^my item has been marked as a red pencil promotion for (\d+) days$/) do |num_days|
+  $item.is_currently_red_pencil_promotion = true
+  $item.number_of_days_on_current_promotion = num_days.to_i
+end
+
+When(/^another day passes during the promotion$/) do
+  $item.add_day
+end
