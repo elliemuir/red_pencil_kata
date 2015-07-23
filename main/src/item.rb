@@ -6,8 +6,8 @@ class Item
   def initialize
     @base_price = 100.0
     @current_price = 100.0
-    @last_price_change = Date.today - 31
-    @last_promotion_start_date = Date.today - 31
+    @last_price_change = nil
+    @last_promotion_start_date = nil
     @is_currently_red_pencil_promotion = false
     @number_of_days_on_current_promotion = 0
   end
@@ -16,7 +16,7 @@ class Item
     current_price = @current_price - @current_price*(percentage.to_f/100)
     percent_off = ((@base_price - current_price)/@base_price) * 100
     if percent_off > 5 && percent_off < 30
-      if @last_price_change < (Date.today - 30) && @last_promotion_start_date < (Date.today - 30)
+      if (@last_price_change.nil?  || @last_price_change < (Date.today - 30)) && (@last_promotion_start_date.nil? || @last_promotion_start_date < (Date.today - 30))
         trigger_red_pencil_promotion unless @is_currently_red_pencil_promotion
       end
     else

@@ -5,6 +5,10 @@ Given(/^the price of my item was last changed (\d+) days ago$/) do |num|
   $item.last_price_change = Date.today - num.to_i
 end
 
+And(/^the last promotion start date was (\d+) days ago$/) do |num|
+  $item.last_promotion_start_date = Date.today - num.to_i
+end
+
 And(/^my item is( not)? currently marked as a red pencil promotion$/) do |negate|
   negate ? $item.is_currently_red_pencil_promotion = false : $item.is_currently_red_pencil_promotion = true
 end
