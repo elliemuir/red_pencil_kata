@@ -13,8 +13,8 @@ class Item
   end
 
   def reduce_price(percentage)
-    @current_price -= @current_price*(percentage.to_f/100)
-    percent_off = ((@base_price - @current_price)/@base_price) * 100
+    current_price = @current_price - @current_price*(percentage.to_f/100)
+    percent_off = ((@base_price - current_price)/@base_price) * 100
     if percent_off > 5 && percent_off < 30
       if @last_price_change < (Date.today - 30) && @last_promotion_start_date < (Date.today - 30)
         trigger_red_pencil_promotion unless @is_currently_red_pencil_promotion
@@ -23,11 +23,14 @@ class Item
       cancel_red_pencil_promotion if @is_currently_red_pencil_promotion
     end
     @last_price_change = Date.today
+    current_price
   end
 
   def increase_price(percentage)
-    @current_price += @current_price*(percentage.to_f/100)
+    current_price = @current_price + @current_price*(percentage.to_f/100)
     cancel_red_pencil_promotion if @is_currently_red_pencil_promotion
+    @last_price_change = Date.today
+    current_price
   end
 
   def add_day
@@ -43,7 +46,6 @@ class Item
 
   def cancel_red_pencil_promotion
     @is_currently_red_pencil_promotion = false
-    @last_promotion_start_date = Date.today
     @number_of_days_on_current_promotion = 0
   end
 
